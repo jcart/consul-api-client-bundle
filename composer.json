@@ -1,0 +1,23 @@
+{
+  "name": "jc/consul-api-client-bundle",
+  "homepage": "http://github.com/jcart/consul-api-client-bundle",
+  "keywords":["consul", "symfony2"],
+  "type":"library",
+  "license":"MIT",
+  "autoload": {
+    "psr-0" : {
+      "JC\\ConsulApiClientBundle" : ""
+    }
+  },
+  "target-dir": "JC/ConsulApiClientBundle",
+  "authors":[
+    {
+      "name":"John Cartwright",
+      "homepage":"http://jcartwright.ca"
+    }
+  ],
+  "require": {
+      "php": ">=5.5.0",
+      "sensiolabs/consul-php-sdk": "dev-master"
+  }  
+}
