@@ -24,14 +24,19 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->arrayNode('clients')
                     ->defaultValue([
+                        'secure' => false,
                         'host' => 'localhost',
+                        'port' => 8500,
+                        'logger' => null,
                         'port' => 8500,
                         'secret' => null,
                     ])
                     ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
                     ->prototype('array')
                         ->children()
+                            ->booleanNode('secure')
+                                ->defaultFalse()
+                            ->end()   
                             ->scalarNode('host')
                                 ->isRequired()
                                 ->cannotBeEmpty()

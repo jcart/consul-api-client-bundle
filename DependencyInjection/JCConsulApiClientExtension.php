@@ -23,19 +23,21 @@ class JCConsulApiClientExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($config['clients'] as $id => $endpointConfiguration) {
+        foreach ($config['clients'] as $id => $client) {
             $httpClientId = sprintf('jc_consul_api_client.http_client.%s', $id);
             $httpClientReference = new Reference($httpClientId);
 
             $factoryId = sprintf('jc_consul_api_client.service_factory.%s', $id);
             $factoryRefence = new Reference($factoryId);
 
+            $baseUrl = sprintf('%s://%s:%s', $client['secure'] ? 'https' : 'http', $client['host'], $client['port']);
+
             $container->register($httpClientId, 'GuzzleHttp\Client')
-                ->addArgument(['base_url' => sprintf('http://%s:%s', $endpointConfiguration['host'], $endpointConfiguration['port'])]);
+                ->addArgument(['base_url' => $baseUrl]);
 
             $container->register($factoryId, 'SensioLabs\Consul\ServiceFactory')
                 ->addArgument([])
-                ->addArgument(isset($endpointConfiguration['logger']) ? new Reference($endpointConfiguration['logger']) : null)
+                ->addArgument(isset($client['logger']) ? new Reference($client['logger']) : null)
                 ->addArgument($httpClientReference);
 
             $container->register(sprintf('jc_consul_api_client.kv.%s', $id), 'SensioLabs\Consul\Services\KV')
