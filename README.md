@@ -9,7 +9,7 @@ Installation
 Download the dependency via composer
 
 ```{r, engine='bash', count_lines}
-composer require consul-api-client-bundle
+composer require jcart/consul-api-client-bundle
 ```
 
 Install the bundle into your AppKernel. Add the following line to the bundle defintions:
